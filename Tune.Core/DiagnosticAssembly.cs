@@ -66,7 +66,7 @@ namespace Tune.Core
                 using (var collector = new ClrEtwCollector())
                 {
                     collector.Start();
-                    result = mi.Invoke(obj, new object[] {argument});
+                    result = mi.Invoke(obj, new object[] { argument });
                     collector.Stop();
 
                     this.HeapStatsData = collector.HeapStatsData;
@@ -119,7 +119,7 @@ namespace Tune.Core
                     ClrRuntime runtime = target.ClrVersions.Single().CreateRuntime();
                     var appDomain = runtime.AppDomains[0];
                     var module = appDomain.Modules.LastOrDefault(m => m.AssemblyName != null && m.AssemblyName.StartsWith(assemblyName));
-                    
+
                     asmWriter.WriteLine(
                         $"; {clrInfo.ModuleInfo.ToString()} ({clrInfo.Flavor} {clrInfo.Version})");
                     asmWriter.WriteLine(
@@ -144,14 +144,14 @@ namespace Tune.Core
                         asmWriter.WriteLine($";    IsArray:     {typeClr.IsArray}");
                         asmWriter.WriteLine($";    IsEnum:      {typeClr.IsEnum}");
                         asmWriter.WriteLine($";    IsPrimitive: {typeClr.IsPrivate}");
-                        asmWriter.WriteLine( ";    Fields:");
-                        asmWriter.WriteLine( ";        {0,6} {1,16} {2,20} {3,4}", "Offset", "Name", "Type", "Size");
+                        asmWriter.WriteLine(";    Fields:");
+                        asmWriter.WriteLine(";        {0,6} {1,16} {2,20} {3,4}", "Offset", "Name", "Type", "Size");
                         var orderedFields = typeClr.Fields.ToList().OrderBy(x => x.Offset);
                         foreach (var field in orderedFields)
                         {
                             asmWriter.WriteLine($";        {field.Offset,6} {field.Name,16} {field.Type.Name,20} {field.Size,4}");
                         }
-                        
+
                         ClrHeap heap = runtime.Heap;
 
                         foreach (ClrMethod method in typeClr.Methods)
@@ -280,5 +280,22 @@ namespace Tune.Core
         x64,
         x86
     }
+
+    public static class DiagnosticAssembyPlatformExtension
+    {
+        public static string ToPlatformString(this DiagnosticAssembyPlatform platform)
+        {
+            switch (platform)
+            {
+                case DiagnosticAssembyPlatform.x86:
+                    return "32";
+                case DiagnosticAssembyPlatform.x64:
+                    return "64";
+                default:
+                    throw new ArgumentOutOfRangeException("Invalid platform type");
+            }
+        }
+    }
+
 }
 

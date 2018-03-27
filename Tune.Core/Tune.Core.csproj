@@ -231,6 +231,9 @@
     <Compile Include="DiagnosticEngine.cs" />
     <Compile Include="NativeTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AssemblyPathsRepository.cs" />
+    <Compile Include="Services\IAssemblyPathsRepository.cs" />
+    <Compile Include="Extensions\ScriptManipulationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

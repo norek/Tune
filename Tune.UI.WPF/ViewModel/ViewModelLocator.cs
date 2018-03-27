@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using Tune.Core.Services;
 using Tune.UI.MVVM.Services;
 using Tune.UI.MVVM.ViewModels;
 using Tune.UI.WPF.Services;
@@ -48,6 +49,7 @@ namespace Tune.UI.WPF.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<IFileService, FileService>();
             SimpleIoc.Default.Register<IApplicationService, ApplicationService>();
+            SimpleIoc.Default.Register<IAssemblyPathsRepository, AssemblyPathsRepository>();
         }
 
         public MainViewModel MainViewModel

@@ -20,6 +20,7 @@ using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using Tune.Core;
 using Tune.UI.MVVM.Services;
+using Tune.Core.Services;
 
 namespace Tune.UI.MVVM.ViewModels
 {
@@ -56,7 +57,7 @@ namespace Tune.UI.MVVM.ViewModels
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IApplicationService applicationService, IFileService fileService)
+        public MainViewModel(IApplicationService applicationService, IFileService fileService, IAssemblyPathsRepository assemblyPathRepository)
         {
             // Services
             this.fileService = fileService;
@@ -69,7 +70,8 @@ namespace Tune.UI.MVVM.ViewModels
             this.AssemblyPlatform = Environment.Is64BitProcess
                 ? DiagnosticAssembyPlatform.x64
                 : DiagnosticAssembyPlatform.x86;
-            this.engine = new DiagnosticEngine();
+            
+            this.engine = new DiagnosticEngine(assemblyPathRepository);
             this.engine.Log += UpdateLog;
 
             // Commands
